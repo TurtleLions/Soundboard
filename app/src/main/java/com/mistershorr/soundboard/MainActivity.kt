@@ -2,36 +2,17 @@ package com.mistershorr.soundboard
 
 import android.media.AudioManager
 import android.media.SoundPool
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.ASSERT
+import android.os.Handler
 import android.view.View
-import android.widget.Button
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.util.HashMap
+import com.mistershorr.soundboard.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     val TAG = "MainActivity"
-    lateinit var buttonA : Button
-    lateinit var buttonBb : Button
-    lateinit var buttonB : Button
-    lateinit var buttonC : Button
-    lateinit var buttonCSharp: Button
-    lateinit var buttonD : Button
-    lateinit var buttonDSharp: Button
-    lateinit var buttonE : Button
-    lateinit var buttonF : Button
-    lateinit var buttonFSharp: Button
-    lateinit var buttonG : Button
-    lateinit var buttonGSharp: Button
     lateinit var soundPool : SoundPool
     var aNote = 0
     var bbNote = 0
@@ -46,14 +27,17 @@ class MainActivity : AppCompatActivity() {
     var gNote = 0
     var gsNote = 0
     var lgNote = 0
+
+    private lateinit var binding: ActivityMainBinding
+
     lateinit var songStorage: List<Note>
-    var songTest = "C 500 C 500 G 500 G 500 A 500 A 500"
+    var songTest = "A 0 C 500 C 500 G 500 G 500 A 500 A 500 G 1000"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        wireWidgets()
         initializeSoundPool()
         setListeners()
         importSong()
@@ -63,40 +47,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners() {
         val soundBoardListener = SoundBoardListener()
-        buttonA.setOnClickListener(soundBoardListener)
-        buttonBb.setOnClickListener(soundBoardListener)
-        buttonB.setOnClickListener(soundBoardListener)
-        buttonC.setOnClickListener(soundBoardListener)
-        buttonCSharp.setOnClickListener(soundBoardListener)
-        buttonD.setOnClickListener(soundBoardListener)
-        buttonDSharp.setOnClickListener(soundBoardListener)
-        buttonE.setOnClickListener(soundBoardListener)
-        buttonF.setOnClickListener(soundBoardListener)
-        buttonFSharp.setOnClickListener(soundBoardListener)
-        buttonG.setOnClickListener(soundBoardListener)
-        buttonGSharp.setOnClickListener(soundBoardListener)
+        binding.buttonMainA.setOnClickListener(soundBoardListener)
+        binding.buttonMainBb.setOnClickListener(soundBoardListener)
+        binding.buttonMainB.setOnClickListener(soundBoardListener)
+        binding.buttonMainC.setOnClickListener(soundBoardListener)
+        binding.buttonMainCs.setOnClickListener(soundBoardListener)
+        binding.buttonMainD.setOnClickListener(soundBoardListener)
+        binding.buttonMainDs.setOnClickListener(soundBoardListener)
+        binding.buttonMainE.setOnClickListener(soundBoardListener)
+        binding.buttonMainF.setOnClickListener(soundBoardListener)
+        binding.buttonMainFs.setOnClickListener(soundBoardListener)
+        binding.buttonMainG.setOnClickListener(soundBoardListener)
+        binding.buttonMainGs.setOnClickListener(soundBoardListener)
     }
 
-
-    private fun wireWidgets() {
-        buttonA = findViewById(R.id.button_main_a)
-        buttonBb = findViewById(R.id.button_main_bb)
-        buttonB = findViewById(R.id.button_main_b)
-        buttonC = findViewById(R.id.button_main_c)
-        buttonCSharp = findViewById(R.id.button_main_cs)
-        buttonD = findViewById(R.id.button_main_d)
-        buttonDSharp = findViewById(R.id.button_main_ds)
-        buttonE = findViewById(R.id.button_main_e)
-        buttonF = findViewById(R.id.button_main_f)
-        buttonFSharp = findViewById(R.id.button_main_fs)
-        buttonG = findViewById(R.id.button_main_g)
-        buttonGSharp = findViewById(R.id.button_main_gs)
-    }
 
     private fun initializeSoundPool() {
 
         this.volumeControlStream = AudioManager.STREAM_MUSIC
-        soundPool = SoundPool(1, AudioManager.STREAM_MUSIC, 0)
+        soundPool = SoundPool(10, AudioManager.STREAM_MUSIC, 0)
 //        soundPool.setOnLoadCompleteListener(SoundPool.OnLoadCompleteListener { soundPool, sampleId, status ->
 //           // isSoundPoolLoaded = true
 //        })
