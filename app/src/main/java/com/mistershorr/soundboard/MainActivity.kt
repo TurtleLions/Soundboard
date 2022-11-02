@@ -2,6 +2,7 @@ package com.mistershorr.soundboard
 
 import android.media.AudioManager
 import android.media.SoundPool
+import kotlinx.coroutines.*
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     lateinit var songStorage: List<Note>
-    var songTest = "A 0 C 500 C 500 G 500 G 500 A 500 A 500 G 1000"
+    var songTest = "A 250 BB 250 B 250 C 250 CS 250 D 250 DS 250 E 250 F 250 FS 250 G 250 GS 250"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,9 @@ class MainActivity : AppCompatActivity() {
         setListeners()
         importSong()
         var songGet = parser(songTest)
-        playSong(songGet)
+        GlobalScope.launch {
+            playSong(songGet)
+        }
     }
 
     private fun setListeners() {
@@ -65,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeSoundPool() {
 
         this.volumeControlStream = AudioManager.STREAM_MUSIC
-        soundPool = SoundPool(10, AudioManager.STREAM_MUSIC, 0)
+        soundPool = SoundPool(100, AudioManager.STREAM_MUSIC, 0)
 //        soundPool.setOnLoadCompleteListener(SoundPool.OnLoadCompleteListener { soundPool, sampleId, status ->
 //           // isSoundPoolLoaded = true
 //        })
@@ -108,6 +111,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun importSong(){
         val inputStream = resources.openRawResource(R.raw.song)
         val jsonString = inputStream.bufferedReader().use{
@@ -147,9 +152,9 @@ class MainActivity : AppCompatActivity() {
         }
         return songParsed
     }
-    private fun playSong(song: List<Note>){
-        for(note in song){
-            when(note.note) {
+    private suspend fun playSong(song: List<Note>){
+        for (note in song) {
+            when (note.note) {
                 "A" -> playNote(aNote)
                 "BB" -> playNote(bbNote)
                 "B" -> playNote(bNote)
@@ -162,8 +167,9 @@ class MainActivity : AppCompatActivity() {
                 "FS" -> playNote(fsNote)
                 "G" -> playNote(gNote)
                 "GS" -> playNote(gsNote)
+                "LG" -> playNote(lgNote)
             }
-            Thread.sleep(note.duration.toLong())
+            delay(note.duration.toLong())
         }
     }
 }
