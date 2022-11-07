@@ -28,12 +28,28 @@ class MainActivity : AppCompatActivity() {
     var gNote = 0
     var gsNote = 0
     var lgNote = 0
+    var haNote = 0
+    var hbbNote = 0
+    var hbNote = 0
+    var hcNote = 0
+    var hcsNote = 0
+    var hdNote = 0
+    var hdsNote = 0
+    var heNote = 0
+    var hfNote = 0
+    var hfsNote = 0
+    var hgNote = 0
+    var hgsNote = 0
+
+    var noteMap = HashMap<String, Int>()
 
     private lateinit var binding: ActivityMainBinding
 
     lateinit var songStorage: List<Note>
-    var songTest = "A 250 BB 250 B 250 C 250 CS 250 D 250 DS 250 E 250 F 250 FS 250 G 250 GS 250"
+    var songTest = ""
 
+    //Song Examples
+    //Mary Had a Little Lamb: B 500 A 500 LG 500 A 500 B 500 B 500 B 1000 A 500 A 500 A 1000 B 500 D 500 D 1000 B 500 A 500 LG 500 A 500 B 500 B 500 B 500 B 500 A 500 A 500 B 500 A 500 LG 1000
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -84,12 +100,53 @@ class MainActivity : AppCompatActivity() {
         fsNote =  soundPool.load(this, R.raw.scalefs, 1)
         gNote =  soundPool.load(this, R.raw.scaleg, 1)
         gsNote =  soundPool.load(this, R.raw.scalegs, 1)
-        gsNote =  soundPool.load(this, R.raw.scalegs, 1)
         lgNote = soundPool.load(this, R.raw.scalelowg, 1)
+        haNote = soundPool.load(this, R.raw.scalehigha, 1)
+        hbbNote = soundPool.load(this, R.raw.scalehighbb, 1)
+        hbNote = soundPool.load(this, R.raw.scalehighb, 1)
+        hcNote =  soundPool.load(this, R.raw.scalehighc, 1)
+        hcsNote =  soundPool.load(this, R.raw.scalehighcs, 1)
+        hdNote =  soundPool.load(this, R.raw.scalehighd, 1)
+        hdsNote =  soundPool.load(this, R.raw.scalehighds, 1)
+        heNote =  soundPool.load(this, R.raw.scalehighe, 1)
+        hfNote =  soundPool.load(this, R.raw.scalehighf, 1)
+        hfsNote =  soundPool.load(this, R.raw.scalehighfs, 1)
+        hgNote =  soundPool.load(this, R.raw.scalehighg, 1)
+        hgsNote =  soundPool.load(this, R.raw.scalehighgs, 1)
+
+        noteMap.put("A", aNote)
+        noteMap.put("BB", bbNote)
+        noteMap.put("B", bNote)
+        noteMap.put("C", cNote)
+        noteMap.put("D", dNote)
+        noteMap.put("DS", dsNote)
+        noteMap.put("E", eNote)
+        noteMap.put("F", fNote)
+        noteMap.put("FS", fsNote)
+        noteMap.put("G", gNote)
+        noteMap.put("GS", gsNote)
+        noteMap.put("LG", lgNote)
+        noteMap.put("HA", haNote)
+        noteMap.put("HBB", hbbNote)
+        noteMap.put("HB", hbNote)
+        noteMap.put("HC", hcNote)
+        noteMap.put("HCS", hcsNote)
+        noteMap.put("HD", hdNote)
+        noteMap.put("HDS", hdsNote)
+        noteMap.put("HE", heNote)
+        noteMap.put("HF", hfNote)
+        noteMap.put("HFS", hfsNote)
+        noteMap.put("HG", hgNote)
+        noteMap.put("HGS", hgsNote)
+
     }
 
     private fun playNote(noteId : Int) {
         soundPool.play(noteId, 1f, 1f, 1, 0, 1f)
+    }
+
+    private fun playNote(note: String){
+        playNote(noteMap[note] ?: 0)
     }
 
     private inner class SoundBoardListener : View.OnClickListener {
@@ -168,6 +225,18 @@ class MainActivity : AppCompatActivity() {
                 "G" -> playNote(gNote)
                 "GS" -> playNote(gsNote)
                 "LG" -> playNote(lgNote)
+                "HA" -> playNote(haNote)
+                "HBB" -> playNote(hbbNote)
+                "HB" -> playNote(hbNote)
+                "HC" -> playNote(hcNote)
+                "HCS" -> playNote(hcsNote)
+                "HD" -> playNote(hdNote)
+                "HDS" -> playNote(hdsNote)
+                "HE" -> playNote(heNote)
+                "HF" -> playNote(hfNote)
+                "HFS" -> playNote(hfsNote)
+                "HG" -> playNote(hgNote)
+                "HGS" -> playNote(hgsNote)
             }
             delay(note.duration.toLong())
         }
