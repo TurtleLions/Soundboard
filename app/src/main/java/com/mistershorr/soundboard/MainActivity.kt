@@ -5,6 +5,7 @@ import android.media.SoundPool
 import kotlinx.coroutines.*
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -27,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     var fsNote = 0
     var gNote = 0
     var gsNote = 0
-    var lgNote = 0
     var haNote = 0
     var hbbNote = 0
     var hbNote = 0
@@ -40,16 +40,29 @@ class MainActivity : AppCompatActivity() {
     var hfsNote = 0
     var hgNote = 0
     var hgsNote = 0
+    var laNote = 0
+    var lbbNote = 0
+    var lbNote = 0
+    var lcNote = 0
+    var lcsNote = 0
+    var ldNote = 0
+    var ldsNote = 0
+    var leNote = 0
+    var lfNote = 0
+    var lfsNote = 0
+    var lgNote = 0
+    var lgsNote = 0
 
     var noteMap = HashMap<String, Int>()
 
     private lateinit var binding: ActivityMainBinding
 
     lateinit var songStorage: List<Note>
-    var songTest = ""
+    var songTest = "D 400 HA 0 LF 0 LC 0 C 800 A 400 G 300 E 100 G 0 A 0 LF 0 LC 400 F 0 LG 300 LE 100 "
 
     //Song Examples
-    //Mary Had a Little Lamb: B 500 A 500 LG 500 A 500 B 500 B 500 B 1000 A 500 A 500 A 1000 B 500 D 500 D 1000 B 500 A 500 LG 500 A 500 B 500 B 500 B 500 B 500 A 500 A 500 B 500 A 500 LG 1000
+    //Mary Had a Little Lamb: B 400 A 400 LG 400 A 400 B 400 B 400 B 800 A 400 A 400 A 800 B 400 D 400 D 800 B 400 A 400 LG 400 A 400 B 400 B 400 B 400 B 400 A 400 A 400 B 400 A 400 LG 1000
+    //Happy Birthday: HC 300 HC 100 F 0 HD 400 HC 400 HF 400 C 0 HE 800 HC 300 HC 100 C 0 HD 400 D 0 HC 400 E 0 HG 400 F 0 HF 800 F 0 HC 400 HA 400 HF 400 BB 0 HE 400 HD 400 HBB 300 HBB 100 C 0 HA 400 HF 400 E 0 G 400 F 0 HF 400
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -58,8 +71,9 @@ class MainActivity : AppCompatActivity() {
         initializeSoundPool()
         setListeners()
         importSong()
-        var songGet = parser(songTest)
+
         GlobalScope.launch {
+            var songGet = parser(songTest)
             playSong(songGet)
         }
     }
@@ -100,7 +114,6 @@ class MainActivity : AppCompatActivity() {
         fsNote =  soundPool.load(this, R.raw.scalefs, 1)
         gNote =  soundPool.load(this, R.raw.scaleg, 1)
         gsNote =  soundPool.load(this, R.raw.scalegs, 1)
-        lgNote = soundPool.load(this, R.raw.scalelowg, 1)
         haNote = soundPool.load(this, R.raw.scalehigha, 1)
         hbbNote = soundPool.load(this, R.raw.scalehighbb, 1)
         hbNote = soundPool.load(this, R.raw.scalehighb, 1)
@@ -113,6 +126,18 @@ class MainActivity : AppCompatActivity() {
         hfsNote =  soundPool.load(this, R.raw.scalehighfs, 1)
         hgNote =  soundPool.load(this, R.raw.scalehighg, 1)
         hgsNote =  soundPool.load(this, R.raw.scalehighgs, 1)
+        laNote = soundPool.load(this, R.raw.scalelowa, 1)
+        lbbNote = soundPool.load(this, R.raw.scalelowbb, 1)
+        lbNote = soundPool.load(this, R.raw.scalelowb, 1)
+        lcNote =  soundPool.load(this, R.raw.scalelowc, 1)
+        lcsNote =  soundPool.load(this, R.raw.scalelowcs, 1)
+        ldNote =  soundPool.load(this, R.raw.scalelowd, 1)
+        ldsNote =  soundPool.load(this, R.raw.scalelowds, 1)
+        leNote =  soundPool.load(this, R.raw.scalelowe, 1)
+        lfNote =  soundPool.load(this, R.raw.scalelowf, 1)
+        lfsNote =  soundPool.load(this, R.raw.scalelowfs, 1)
+        lgNote =  soundPool.load(this, R.raw.scalelowg, 1)
+        lgsNote =  soundPool.load(this, R.raw.scalelowgs, 1)
 
         noteMap.put("A", aNote)
         noteMap.put("BB", bbNote)
@@ -125,7 +150,6 @@ class MainActivity : AppCompatActivity() {
         noteMap.put("FS", fsNote)
         noteMap.put("G", gNote)
         noteMap.put("GS", gsNote)
-        noteMap.put("LG", lgNote)
         noteMap.put("HA", haNote)
         noteMap.put("HBB", hbbNote)
         noteMap.put("HB", hbNote)
@@ -138,7 +162,18 @@ class MainActivity : AppCompatActivity() {
         noteMap.put("HFS", hfsNote)
         noteMap.put("HG", hgNote)
         noteMap.put("HGS", hgsNote)
-
+        noteMap.put("LA", haNote)
+        noteMap.put("LBB", hbbNote)
+        noteMap.put("LB", hbNote)
+        noteMap.put("LC", hcNote)
+        noteMap.put("LCS", hcsNote)
+        noteMap.put("LD", hdNote)
+        noteMap.put("LDS", hdsNote)
+        noteMap.put("LE", heNote)
+        noteMap.put("LF", hfNote)
+        noteMap.put("LFS", hfsNote)
+        noteMap.put("LG", lgNote)
+        noteMap.put("LGS", hgsNote)
     }
 
     private fun playNote(noteId : Int) {
@@ -210,35 +245,22 @@ class MainActivity : AppCompatActivity() {
         return songParsed
     }
     private suspend fun playSong(song: List<Note>){
+        delay(1000)
+        val chordSave = mutableListOf<Note>()
         for (note in song) {
-            when (note.note) {
-                "A" -> playNote(aNote)
-                "BB" -> playNote(bbNote)
-                "B" -> playNote(bNote)
-                "C" -> playNote(cNote)
-                "CS" -> playNote(csNote)
-                "D" -> playNote(dNote)
-                "DS" -> playNote(dsNote)
-                "E" -> playNote(eNote)
-                "F" -> playNote(fNote)
-                "FS" -> playNote(fsNote)
-                "G" -> playNote(gNote)
-                "GS" -> playNote(gsNote)
-                "LG" -> playNote(lgNote)
-                "HA" -> playNote(haNote)
-                "HBB" -> playNote(hbbNote)
-                "HB" -> playNote(hbNote)
-                "HC" -> playNote(hcNote)
-                "HCS" -> playNote(hcsNote)
-                "HD" -> playNote(hdNote)
-                "HDS" -> playNote(hdsNote)
-                "HE" -> playNote(heNote)
-                "HF" -> playNote(hfNote)
-                "HFS" -> playNote(hfsNote)
-                "HG" -> playNote(hgNote)
-                "HGS" -> playNote(hgsNote)
+            if(note.duration==0){
+                chordSave.add(note)
             }
-            delay(note.duration.toLong())
+            else {
+                if(chordSave.size>0) {
+                    for (cNote in chordSave) {
+                        playNote(cNote.note)
+                    }
+                }
+                playNote(note.note)
+                delay(note.duration.toLong())
+                chordSave.clear()
+            }
         }
     }
 }
