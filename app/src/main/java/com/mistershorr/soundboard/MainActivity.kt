@@ -58,11 +58,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     lateinit var songStorage: List<Note>
-    var songTest = "D 400 HA 0 LF 0 LC 0 C 800 A 400 G 300 E 100 G 0 A 0 LF 0 LC 400 F 0 LG 300 LE 100 "
 
+    var Mary = "B 400 A 400 LG 400 A 400 B 400 B 400 B 800 A 400 A 400 A 800 B 400 D 400 D 800 B 400 A 400 LG 400 A 400 B 400 B 400 B 400 B 400 A 400 A 400 B 400 A 400 LG 1000"
+    var Katyusha = "A 600 B 200 C 600 A 200 C 400 C 400 B 400 A 400 B 800 LE 800 B 600 C 300 D 600 B 200 D 400 D 400 C 400 B 400 A 1600 E 800 HA 800 G 800 LA 400 G 400 F 400 F 400 E 400 D 400 E 800 A 1200 F 800 D 400 E 600 C 200 B 400 LE 400 C 400 B 400 A 1600 E 800 HA 800 G 800 LA 400 G 400 F 400 F 400 E 400 D 400 E 800 A 1200 F 800 D 400 E 1200 C 400 B 400 LE 400 C 400 B 400 A 1600 LE 1200 LF 400 LG 1200 LE 400 LG 400 LG 400 LF 400 LE 400 LF 800 LB 800 LF 1200 LG 400 A 1200 LF 400 A 400 A 400 LG 400 LF 400 LE 1600 B 800 E 800 D 800 E 400 D 400 C 400 C 400 B 400 A 400 B 800 LE 1200 C 800 A 400 B 1200 LG 400 LF 400 LB 400 LG 400 LF 400 LE 1600 B 800 E 800 D 800 E 400 D 400 C 400 C 400 B 400 A 400 B 800 LE 1200 C 800 A 400 B 1200 LG 400 LF 400 LB 400 LG 400 LF 400 LE 1600 LG 1200 A 400 BB 1200 LG 400 BB 400 BB 400 A 400 LG 400 A 800 LD 800 A 1200 BB 400 C 1200 A 400 C 400 C 400 BB 400 A 400 G 1600 D 800 G 800 F 800 G 400 F 400 DS 400 DS 400 D 400 C 400 D 800 LG 1200 DS 800 C 400 D 1200 BB 400 A 400 LD 400 BB 400 A 400 LG 1600 D 800 G 800 F 800 G 400 F 400 DS 400 DS 400 D 400 C 400 D 800 LG 1200 DS 800 C 400 D 1200 BB 400 A 400 LD 400 BB 400 A 400 LG 1600 LD 1200 LE 400 LF 1200 LD 400 LF 400 LF 400 LE 400 LD 400 LE 800 LA 800 LE 1200 LF 400 LG 1200 LE 400 LG 400 LG 400 LF 400 LE 400 LD 1600 A 800 D 800 C 800 D 400 C 400 BB 400 BB 400 A 400 LG 400 A 800 LD 1200 BB 800 LG 400 A 1200 LF 400 LE 400 LA 400 LF 400 LE 400 LD 1600 A 800 D 800 C 800 D 400 C 400 BB 400 BB 400 A 400 LG 400 A 800 LD 1200 BB 800 LG 400 A 1200 LF 400 LE 400 LA 400 LF 400 LE 400 LD 1600"
+    var HBDY = "HC 300 HC 100 F 0 HD 400 HC 400 HF 400 C 0 HE 800 HC 300 HC 100 C 0 HD 400 D 0 HC 400 E 0 HG 400 F 0 HF 800 F 0 HC 400 HA 400 HF 400 BB 0 HE 400 HD 400 HBB 300 HBB 100 C 0 HA 400 HF 400 E 0 G 400 F 0 HF 400"
     //Song Examples
     //Mary Had a Little Lamb: B 400 A 400 LG 400 A 400 B 400 B 400 B 800 A 400 A 400 A 800 B 400 D 400 D 800 B 400 A 400 LG 400 A 400 B 400 B 400 B 400 B 400 A 400 A 400 B 400 A 400 LG 1000
     //Happy Birthday: HC 300 HC 100 F 0 HD 400 HC 400 HF 400 C 0 HE 800 HC 300 HC 100 C 0 HD 400 D 0 HC 400 E 0 HG 400 F 0 HF 800 F 0 HC 400 HA 400 HF 400 BB 0 HE 400 HD 400 HBB 300 HBB 100 C 0 HA 400 HF 400 E 0 G 400 F 0 HF 400
+    //Katyusha: A 600 B 200 C 600 A 200 C 400 C 400 B 400 A 400 B 800 LE 800 B 600 C 300 D 600 B 200 D 400 D 400 C 400 B 400 A 1600 E 800 HA 800 G 800 LA 400 G 400 F 400 F 400 E 400 D 400 E 800 A 1200 F 800 D 400 E 600 C 200 B 400 LE 400 C 400 B 400 A 1600 E 800 HA 800 G 800 LA 400 G 400 F 400 F 400 E 400 D 400 E 800 A 1200 F 800 D 400 E 1200 C 400 B 400 LE 400 C 400 B 400 A 1600 LE 1200 LF 400 LG 1200 LE 400 LG 400 LG 400 LF 400 LE 400 LF 800 LB 800 LF 1200 LG 400 A 1200 LF 400 A 400 A 400 LG 400 LF 400 LE 1600 B 800 E 800 D 800 E 400 D 400 C 400 C 400 B 400 A 400 B 800 LE 1200 C 800 A 400 B 1200 LG 400 LF 400 LB 400 LG 400 LF 400 LE 1600 B 800 E 800 D 800 E 400 D 400 C 400 C 400 B 400 A 400 B 800 LE 1200 C 800 A 400 B 1200 LG 400 LF 400 LB 400 LG 400 LF 400 LE 1600 LG 1200 A 400 BB 1200 LG 400 BB 400 BB 400 A 400 LG 400 A 800 LD 800 A 1200 BB 400 C 1200 A 400 C 400 C 400 BB 400 A 400 G 1600 D 800 G 800 F 800 G 400 F 400 DS 400 DS 400 D 400 C 400 D 800 LG 1200 DS 800 C 400 D 1200 BB 400 A 400 LD 400 BB 400 A 400 LG 1600 D 800 G 800 F 800 G 400 F 400 DS 400 DS 400 D 400 C 400 D 800 LG 1200 DS 800 C 400 D 1200 BB 400 A 400 LD 400 BB 400 A 400 LG 1600 LD 1200 LE 400 LF 1200 LD 400 LF 400 LF 400 LE 400 LD 400 LE 800 LA 800 LE 1200 LF 400 LG 1200 LE 400 LG 400 LG 400 LF 400 LE 400 LD 1600 A 800 D 800 C 800 D 400 C 400 BB 400 BB 400 A 400 LG 400 A 800 LD 1200 BB 800 LG 400 A 1200 LF 400 LE 400 LA 400 LF 400 LE 400 LD 1600 A 800 D 800 C 800 D 400 C 400 BB 400 BB 400 A 400 LG 400 A 800 LD 1200 BB 800 LG 400 A 1200 LF 400 LE 400 LA 400 LF 400 LE 400 LD 1600
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -71,11 +74,6 @@ class MainActivity : AppCompatActivity() {
         initializeSoundPool()
         setListeners()
         importSong()
-
-        GlobalScope.launch {
-            var songGet = parser(songTest)
-            playSong(songGet)
-        }
     }
 
     private fun setListeners() {
@@ -92,6 +90,24 @@ class MainActivity : AppCompatActivity() {
         binding.buttonMainFs.setOnClickListener(soundBoardListener)
         binding.buttonMainG.setOnClickListener(soundBoardListener)
         binding.buttonMainGs.setOnClickListener(soundBoardListener)
+        binding.button.setOnClickListener{
+            GlobalScope.launch {
+                var songGet = parser(Mary, 1.0)
+                playSong(songGet)
+            }
+        }
+        binding.button2.setOnClickListener{
+            GlobalScope.launch {
+                var songGet = parser(Katyusha, 0.5)
+                playSong(songGet)
+            }
+        }
+        binding.button3.setOnClickListener{
+            GlobalScope.launch {
+                var songGet = parser(HBDY, 1.0)
+                playSong(songGet)
+            }
+        }
     }
 
 
@@ -162,18 +178,18 @@ class MainActivity : AppCompatActivity() {
         noteMap.put("HFS", hfsNote)
         noteMap.put("HG", hgNote)
         noteMap.put("HGS", hgsNote)
-        noteMap.put("LA", haNote)
-        noteMap.put("LBB", hbbNote)
-        noteMap.put("LB", hbNote)
-        noteMap.put("LC", hcNote)
-        noteMap.put("LCS", hcsNote)
-        noteMap.put("LD", hdNote)
-        noteMap.put("LDS", hdsNote)
-        noteMap.put("LE", heNote)
-        noteMap.put("LF", hfNote)
-        noteMap.put("LFS", hfsNote)
+        noteMap.put("LA", laNote)
+        noteMap.put("LBB", lbbNote)
+        noteMap.put("LB", lbNote)
+        noteMap.put("LC", lcNote)
+        noteMap.put("LCS", lcsNote)
+        noteMap.put("LD", ldNote)
+        noteMap.put("LDS", ldsNote)
+        noteMap.put("LE", leNote)
+        noteMap.put("LF", lfNote)
+        noteMap.put("LFS", lfsNote)
         noteMap.put("LG", lgNote)
-        noteMap.put("LGS", hgsNote)
+        noteMap.put("LGS", lgsNote)
     }
 
     private fun playNote(noteId : Int) {
@@ -215,7 +231,7 @@ class MainActivity : AppCompatActivity() {
         songStorage = gson.fromJson(jsonString, type)
     }
 
-    private fun parser(input: String): List<Note>{
+    private fun parser(input: String, speedFactor: Double): List<Note>{
         var songParsed = mutableListOf<Note>()
         var note: String = ""
         var duration = ""
@@ -235,7 +251,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else{
                     onNote=true
-                    var newNote = Note(duration.toInt(), note)
+                    var newNote = Note((duration.toDouble()*speedFactor).toInt(), note)
                     songParsed.add(newNote)
                     note = ""
                     duration = ""
